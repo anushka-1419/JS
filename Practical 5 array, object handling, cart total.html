@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practical 5 - Shopping Cart</title>
+<!--
+AIM:
+To demonstrate array methods and object handling by creating
+a shopping cart calculator with discount logic.
+
+THEORY:
+Arrays store multiple values in a single variable.
+JavaScript provides methods like push(), map(), reduce()
+and forEach() to manipulate arrays.
+Objects store data in key-value pairs.
+Discount logic calculates reduced prices based on cart value.
+
+CODE EXPLANATION:
+1. Products are stored as objects inside an array.
+2. push() adds products to the cart.
+3. forEach() displays cart items.
+4. reduce() calculates the total price.
+5. Conditional statements apply discounts.
+6. Final amount is displayed to the user.
+
+FUNCTIONS USED:
+push() : Adds an item to an array.
+forEach() : Iterates through array elements.
+map() : Creates a new transformed array.
+reduce() : Calculates the cart total.
+toFixed() : Formats decimal values.
+alert() : Displays the final bill.
+
+CONCLUSION:
+Successfully created a shopping cart calculator using
+JavaScript arrays, objects and discount logic.
+-->
+</head>
+<body>
+<h2>Shopping Cart Calculator</h2>
+<div id="cart"></div>
+<button onclick="addProduct()">Add Product</button>
+<button onclick="calculateTotal()">Calculate Bill</button>
+<h3 id="result"></h3>
+<script>
+let cart = [
+    {name: "Laptop", price: 50000, quantity: 1},
+    {name: "Mouse", price: 500, quantity: 2}
+];
+
+function addProduct() {
+    let name = prompt("Enter product name:");
+    let price = Number(prompt("Enter product price:"));
+    let quantity = Number(prompt("Enter quantity:"));
+    if (!name || !name.trim() || !Number.isFinite(price) || price <= 0 ||
+        !Number.isInteger(quantity) || quantity <= 0) {
+        alert("Please enter valid product details!");
+        return;
+    }
+    cart.push({name: name.trim(), price, quantity});
+    displayCart();
+}
+function displayCart() {
+    document.getElementById("cart").innerHTML =
+    cart.map(p => `${p.name} - Rs.${p.price} x ${p.quantity}`).join("<br>");
+}
+function calculateTotal() {
+    let total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
+    let discount = total >= 50000 ? 20 : total >= 10000 ? 10 : 0;
+    let finalAmount = total - total * discount / 100;
+    document.getElementById("result").innerHTML =
+    `Total: Rs.${total.toFixed(2)}<br>Discount: ${discount}%<br>Final Amount: Rs.${finalAmount.toFixed(2)}`;
+}
+displayCart();
+</script>
+</body>
+</html>
