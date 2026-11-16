@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practical 4 - Palindrome Checker</title>
+<!--
+AIM:
+To demonstrate function types, scope, closure and try-catch
+by creating a palindrome checker.
+
+THEORY:
+Functions are reusable blocks of code.
+JavaScript supports function declaration, function expression
+and arrow functions. Scope defines variable accessibility.
+Closure allows an inner function to access outer variables.
+Try-catch handles runtime errors.
+
+CODE EXPLANATION:
+1. User enters a word or sentence.
+2. Arrow function removes spaces and special characters.
+3. Function declaration checks whether it is a palindrome.
+4. Closure counts the number of checking attempts.
+5. Function expression displays the result.
+6. Try-catch handles empty input and errors.
+
+FUNCTIONS USED:
+checkPalindrome() : Checks palindrome condition.
+normalize() : Cleans the input text.
+showResult() : Displays the result.
+createCounter() : Creates a closure counter.
+try-catch : Handles errors.
+toLowerCase() : Converts text to lowercase.
+split() : Converts string into an array.
+reverse() : Reverses the array.
+join() : Converts array into a string.
+
+SCOPE:
+Global scope: Variables accessible throughout the script.
+Local scope: Variables declared inside a function.
+Closure: Inner function remembers outer function variables.
+
+CONCLUSION:
+Successfully implemented a palindrome checker using
+JavaScript functions, scope, closure and error handling.
+-->
+</head>
+<body>
+<h2>Palindrome Checker</h2>
+<input type="text" id="word" placeholder="Enter a word or sentence">
+<button onclick="checkPalindrome()">Check</button>
+<p id="result"></p>
+<script>
+let attempts = 0;
+
+// ARROW FUNCTION
+const normalize = text => text.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+// CLOSURE
+function createCounter() {
+    let count = 0;
+    return function() { return ++count; };
+}
+const counter = createCounter();
+
+// FUNCTION DECLARATION
+function checkPalindrome() {
+    try {
+        let word = document.getElementById("word").value;
+        if (!word.trim()) throw new Error("Please enter some text!");
+        let clean = normalize(word);
+        if (!clean) throw new Error("Enter valid text!");
+        let reversed = clean.split("").reverse().join("");
+        attempts = counter();
+        showResult(clean === reversed, attempts);
+    } catch(error) {
+        document.getElementById("result").innerHTML = error.message;
+    }
+}
+
+// FUNCTION EXPRESSION
+const showResult = function(isPalindrome, count) {
+    document.getElementById("result").innerHTML =
+    (isPalindrome ? "It is a Palindrome!" : "Not a Palindrome!") +
+    "<br>Attempts: " + count;
+};
+</script>
+</body>
+</html>
