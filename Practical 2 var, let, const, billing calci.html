@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practical 2 - Billing Calculator</title>
+<!--
+AIM:
+To demonstrate var, let, const, template literals and destructuring.
+
+THEORY:
+var, let and const declare variables. Template literals use
+backticks to insert values. Destructuring extracts array values.
+
+CODE EXPLANATION:
+User enters product name, price and quantity.
+Destructuring extracts product details.
+The program calculates subtotal, tax and final bill.
+
+FUNCTIONS USED:
+prompt() - Takes user input.
+Number() - Converts input into numbers.
+isNaN() - Checks invalid numeric values.
+console.log() - Displays output in console.
+alert() - Displays the final bill.
+
+CONCLUSION:
+Successfully created a billing calculator using JavaScript.
+-->
+</head>
+<body>
+<h2>JavaScript Billing Calculator</h2>
+<p>Open the browser and enter the requested details.</p>
+
+<script>
+var shopName = "ABC Store";
+
+let product = prompt("Enter product name:");
+let price = Number(prompt("Enter product price:"));
+let quantity = Number(prompt("Enter quantity:"));
+
+const taxRate = 0.05;
+
+if (product && price > 0 && quantity > 0 &&
+    !isNaN(price) && !isNaN(quantity)) {
+
+    let productDetails = [product, price];
+    let [itemName, itemPrice] = productDetails;
+
+    let subtotal = itemPrice * quantity;
+    let tax = subtotal * taxRate;
+    let total = subtotal + tax;
+
+    let bill = `
+${shopName}
+----------------------
+Product: ${itemName}
+Price: Rs.${itemPrice}
+Quantity: ${quantity}
+Subtotal: Rs.${subtotal}
+Tax (5%): Rs.${tax}
+Total: Rs.${total}
+----------------------`;
+
+    console.log(bill);
+    alert(bill);
+
+} else {
+    alert("Invalid input! Please enter valid product details.");
+}
+</script>
+</body>
+</html>
