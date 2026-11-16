@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practical 7 - To Do List</title>
+<!--
+AIM:
+To perform DOM traversal and updates by creating a To-Do List
+with add, edit, delete and task completion features.
+
+THEORY:
+DOM represents an HTML document as a tree of objects.
+DOM traversal accesses related elements, while DOM manipulation
+creates, updates and removes elements dynamically.
+
+CODE EXPLANATION:
+1. User enters a task and clicks Add Task.
+2. A checkbox, task text, Edit and Delete buttons are created.
+3. Clicking the checkbox marks the task as completed using line-through.
+4. Edit updates the existing task.
+5. Delete removes the selected task from the list.
+
+FUNCTIONS AND PROPERTIES USED:
+getElementById() : Selects an element by its ID.
+createElement() : Creates a new HTML element.
+appendChild() : Adds a child element.
+parentElement : Accesses the parent element.
+remove() : Removes an element from the DOM.
+classList.toggle() : Adds or removes a CSS class.
+prompt() : Takes input through a dialog box.
+trim() : Removes extra spaces from a string.
+value : Gets the input field's value.
+
+CONCLUSION:
+Successfully created a To-Do List using DOM traversal
+and manipulation with add, edit, delete and complete features.
+-->
+<style>
+.completed { text-decoration: line-through; color: gray; }
+</style>
+</head>
+<body>
+<h2>My To-Do List</h2>
+<input id="task" placeholder="Enter a task">
+<button onclick="addTask()">Add Task</button>
+<ul id="list"></ul>
+<script>
+function addTask() {
+    let input = document.getElementById("task");
+    let value = input.value.trim();
+    if (!value) return alert("Enter a task!");
+    let li = document.createElement("li");
+    let check = document.createElement("input");
+    check.type = "checkbox";
+    let span = document.createElement("span");
+    span.textContent = " " + value + " ";
+    check.onchange = function() {
+        span.classList.toggle("completed", check.checked);
+    };
+    let edit = document.createElement("button");
+    edit.textContent = "Edit";
+    edit.onclick = function() {
+        let updated = prompt("Edit task:", span.textContent.trim());
+        if (updated && updated.trim())
+            span.textContent = " " + updated.trim() + " ";
+    };
+    let del = document.createElement("button");
+    del.textContent = "Delete";
+    del.onclick = function() { del.parentElement.remove(); };
+    li.append(check, span, edit, del);
+    document.getElementById("list").appendChild(li);
+    input.value = "";
+}
+</script>
+</body>
+</html>
