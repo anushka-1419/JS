@@ -1,0 +1,81 @@
+    
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practical 10 - JSON Data</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!--
+AIM:
+To load and display JSON data using Fetch API and
+jQuery $.getJSON(), and dynamically render it in a table.
+
+THEORY:
+JSON is a lightweight format used to store and exchange data.
+Fetch API and jQuery getJSON() retrieve and process JSON data.
+
+CODE EXPLANATION:
+1. Student data is stored as JSON inside the JavaScript code.
+2. Fetch API reads the JSON data using a Blob URL.
+3. jQuery $.getJSON() loads the same data using a data URL.
+4. JSON.parse() converts JSON text into JavaScript objects.
+5. createElement() creates table rows and cells dynamically.
+6. appendChild() adds the rows to the HTML table.
+
+FUNCTIONS USED:
+fetch() : Retrieves data asynchronously.
+then() : Handles successful asynchronous results.
+json() : Converts response into JSON.
+$.getJSON() : Loads JSON data using jQuery.
+JSON.parse() : Converts JSON text into objects.
+createElement() : Creates HTML elements.
+appendChild() : Adds elements to the DOM.
+forEach() : Iterates through the data array.
+
+CONCLUSION:
+Successfully loaded local JSON data using Fetch API
+and jQuery getJSON() and displayed it in a table.
+-->
+</head>
+<body>
+<h2>Student Details using Fetch API</h2>
+<button onclick="loadFetch()">Load Using Fetch</button>
+<table border="1" id="fetchTable"></table>
+<h2>Student Details using jQuery</h2>
+<button onclick="loadJQuery()">Load Using jQuery</button>
+<table border="1" id="jqueryTable"></table>
+<script>
+let students = [
+    {name:"Omkar", age:20},
+    {name:"Nandini", age:20},
+    {name:"Anushka", age:19},
+    {name:"Arnav", age:19}
+];
+let jsonData = JSON.stringify(students);
+function display(data, id) {
+    let table = document.getElementById(id);
+    table.innerHTML = "<tr><th>Name</th><th>Age</th></tr>";
+    data.forEach(student => {
+        let row = document.createElement("tr");
+        row.innerHTML = `<td>${student.name}</td><td>${student.age}</td>`;
+        table.appendChild(row);
+    });
+}
+function loadFetch() {
+    let blob = new Blob([jsonData], {type:"application/json"});
+    fetch(URL.createObjectURL(blob))
+    .then(response => response.json())
+    .then(data => display(data, "fetchTable"))
+    .catch(error => alert(error));
+}
+function loadJQuery() {
+    let dataURL = "data:application/json;charset=utf-8," +
+                  encodeURIComponent(jsonData);
+    $.getJSON(dataURL, function(data) {
+        display(data, "jqueryTable");
+    }).fail(function() {
+        alert("Error loading JSON!");
+    });
+}
+</script>
+</body>
+</html>
