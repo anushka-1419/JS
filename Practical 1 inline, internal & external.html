@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Practical 1 - JavaScript</title>
+
+    <!--
+    AIM:
+    To demonstrate inline, internal and external JavaScript
+    and use console methods to display user information.
+
+    THEORY:
+    JavaScript is a scripting language used to make web pages
+    interactive. It can be added using inline, internal and
+    external methods. Console methods help display messages.
+
+    CODE EXPLANATION:
+    1. Inline JavaScript is written inside an HTML event.
+    2. Internal JavaScript is written inside script tags.
+    3. External JavaScript is linked using the src attribute.
+    4. Console methods display information in the browser console.
+
+    FUNCTIONS USED:
+    console.log() : Displays normal messages.
+    console.info() : Displays informational messages.
+    console.warn() : Displays warning messages.
+    console.error() : Displays error messages.
+    alert() : Displays a popup message.
+
+    CONCLUSION:
+    Successfully demonstrated inline, internal and external
+    JavaScript along with console methods.
+    -->
+
+    <script>
+        // INTERNAL JAVASCRIPT
+        console.log("Welcome to JavaScript Practical 1!");
+        console.info("User Information Loaded");
+        console.warn("This is a warning message");
+        console.error("This is a sample error message");
+
+        let name = "Anushka";
+        let age = 20;
+        let course = "Computer Science";
+
+        console.log("Name:", name);
+        console.log("Age:", age);
+        console.log("Course:", course);
+    </script>
+</head>
+<body>
+
+    <h2>Welcome to JavaScript</h2>
+    <p>Name: Anushka</p>
+    <p>Age: 20</p>
+    <p>Course: Computer Science</p>
+
+    <button onclick="alert('Welcome Anushka!')">
+        Click Here
+    </button>
+
+    <!-- EXTERNAL JAVASCRIPT -->
+    <script src="external.js"></script>
+
+</body>
+</html>
