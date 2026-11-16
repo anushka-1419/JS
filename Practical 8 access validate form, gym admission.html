@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practical 8 - Gym Admission Form</title>
+<!--
+AIM:
+To access and validate form fields using JavaScript events
+by designing a Gym Admission Form with live input feedback.
+
+THEORY:
+JavaScript events are actions performed by users, such as
+input, change, click and submit. Event handling allows
+JavaScript to respond to these actions.
+Form validation checks whether entered data is correct.
+
+CODE EXPLANATION:
+1. The user enters name, age, email and phone number.
+2. The input event displays live feedback.
+3. The change event detects selected membership plans.
+4. The submit event validates all form fields.
+5. If all fields are valid, an admission confirmation is shown.
+
+FUNCTIONS AND METHODS USED:
+getElementById() : Accesses an HTML element using its ID.
+addEventListener() : Attaches an event to an element.
+preventDefault() : Prevents default form submission.
+trim() : Removes extra spaces from text.
+test() : Checks whether input matches a regex pattern.
+value : Gets the value entered in a form field.
+textContent : Updates the text displayed on the webpage.
+
+CONCLUSION:
+Successfully designed a Gym Admission Form using JavaScript
+events and live form validation.
+-->
+</head>
+<body>
+<h2>Gym Admission Form</h2>
+<form id="gymForm">
+<label>Name:</label><br>
+<input id="name" placeholder="Enter your name" required><br><br>
+<label>Age:</label><br>
+<input id="age" type="number" placeholder="Enter your age" required><br><br>
+<label>Email:</label><br>
+<input id="email" type="email" placeholder="Enter your email" required><br><br>
+<label>Phone:</label><br>
+<input id="phone" placeholder="Enter 10 digit phone number" required><br><br>
+<label>Membership Plan:</label><br>
+<select id="plan" required>
+<option value="">Select Plan</option>
+<option>Monthly</option>
+<option>Quarterly</option>
+<option>Yearly</option>
+</select><br><br>
+<p id="live">Fill the form to see live feedback.</p>
+<button type="submit">Submit Admission</button>
+</form>
+<h3 id="result"></h3>
+<script>
+let fields = ["name", "age", "email", "phone", "plan"];
+fields.forEach(id => {
+    document.getElementById(id).addEventListener("input", liveCheck);
+    document.getElementById(id).addEventListener("change", liveCheck);
+});
+function liveCheck() {
+    let name = document.getElementById("name").value.trim();
+    document.getElementById("live").textContent =
+        name ? "Welcome, " + name + "! Keep filling the form." :
+        "Please enter your name.";
+}
+document.getElementById("gymForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    let name = document.getElementById("name").value.trim();
+    let age = Number(document.getElementById("age").value);
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let plan = document.getElementById("plan").value;
+    if (!name || age < 18 || age > 60 ||
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+        !/^[0-9]{10}$/.test(phone) || !plan) {
+        document.getElementById("result").textContent =
+            "Invalid details! Check all fields. Age must be 18-60.";
+        return;
+    }
+    document.getElementById("result").textContent =
+        "Admission Successful! Welcome to our Gym, " + name +
+        ". Plan: " + plan;
+});
+</script>
+</body>
+</html>
