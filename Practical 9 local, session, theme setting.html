@@ -5,31 +5,36 @@
 <title>Practical 9 - Theme Storage</title>
 <!--
 AIM:
-To implement Local Storage and Session Storage in JavaScript
-to save user preferences such as theme settings.
+To implement Local Storage and Session Storage to save
+user preferences such as theme settings.
 
 THEORY:
-Local Storage stores data permanently in the browser until
-it is manually cleared. Session Storage stores data only
-for the current browser tab session.
-Both store data as key-value pairs.
+Local Storage and Session Storage store data in key-value pairs.
+Local Storage keeps data until manually deleted, while
+Session Storage keeps data for the current tab session.
+
+DIFFERENCE BETWEEN LOCAL AND SESSION STORAGE:
+1. Local Storage data remains after closing the browser.
+   Session Storage data is cleared when the tab session ends.
+2. Local Storage is used for long-term storage.
+   Session Storage is used for temporary storage.
+3. Local Storage uses the localStorage object.
+   Session Storage uses the sessionStorage object.
 
 CODE EXPLANATION:
-1. The user selects Light Mode or Dark Mode.
-2. Local Storage saves the selected theme permanently.
-3. Session Storage saves a temporary theme preference.
-4. On page load, the saved local theme is applied.
-5. The Clear button removes saved preferences.
+1. User selects Light Mode or Dark Mode.
+2. Local Storage saves the theme permanently.
+3. Session Storage saves the theme temporarily.
+4. Saved theme is applied when the page loads.
+5. Clear button removes saved preferences.
 
 FUNCTIONS AND METHODS USED:
-localStorage.setItem() : Saves data in local storage.
-localStorage.getItem() : Retrieves saved local data.
-localStorage.removeItem() : Removes local storage data.
-sessionStorage.setItem() : Saves session data.
-sessionStorage.getItem() : Retrieves session data.
-sessionStorage.removeItem() : Removes session data.
+setItem() : Stores data.
+getItem() : Retrieves stored data.
+removeItem() : Removes stored data.
 getElementById() : Accesses an HTML element.
-addEventListener() : Handles user events.
+applyTheme() : Changes the page theme.
+addEventListener() : Handles events.
 
 CONCLUSION:
 Successfully implemented Local Storage and Session Storage
@@ -45,33 +50,27 @@ to save and manage user theme preferences.
 <p id="message">Choose your preferred theme.</p>
 <script>
 function applyTheme(theme) {
-    document.body.style.backgroundColor =
-        theme === "dark" ? "#222" : "white";
-    document.body.style.color =
-        theme === "dark" ? "white" : "black";
+    document.body.style.backgroundColor = theme === "dark" ? "#222" : "white";
+    document.body.style.color = theme === "dark" ? "white" : "black";
 }
 function setTheme(theme) {
     localStorage.setItem("theme", theme);
     sessionStorage.removeItem("theme");
     applyTheme(theme);
-    document.getElementById("message").textContent =
-        "Theme saved in Local Storage: " + theme;
+    document.getElementById("message").textContent = "Saved in Local Storage: " + theme;
 }
 function setSessionTheme() {
     sessionStorage.setItem("theme", "dark");
     applyTheme("dark");
-    document.getElementById("message").textContent =
-        "Dark theme saved for this session only.";
+    document.getElementById("message").textContent = "Saved for this session only.";
 }
 function clearTheme() {
     localStorage.removeItem("theme");
     sessionStorage.removeItem("theme");
     applyTheme("light");
-    document.getElementById("message").textContent =
-        "All saved preferences cleared.";
+    document.getElementById("message").textContent = "Preferences cleared.";
 }
-let savedTheme = sessionStorage.getItem("theme") ||
-                 localStorage.getItem("theme") || "light";
+let savedTheme = sessionStorage.getItem("theme") || localStorage.getItem("theme") || "light";
 applyTheme(savedTheme);
 </script>
 </body>
