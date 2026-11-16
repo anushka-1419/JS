@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practical 3 - Grading System</title>
+<!--
+AIM:
+To implement form validation and create a grading system
+for multiple subjects using user-entered marks.
+
+THEORY:
+JavaScript is used to validate forms and perform calculations.
+DOM manipulation allows adding multiple subject fields dynamically.
+Conditional statements determine grades based on percentage.
+
+CODE EXPLANATION:
+1. User enters student name and subject marks.
+2. Add Subject button creates new subject fields.
+3. Input validation checks marks between 0 and 100.
+4. Total and percentage are calculated.
+5. Grade is assigned based on percentage.
+
+FUNCTIONS USED:
+addSubject() : Adds a new subject input field.
+calculateGrade() : Calculates total, percentage and grade.
+createElement() : Creates HTML elements dynamically.
+appendChild() : Adds elements to the webpage.
+querySelectorAll() : Selects all subject marks fields.
+preventDefault() : Prevents form submission.
+
+CONCLUSION:
+Successfully created a multiple-subject grading system
+using JavaScript, DOM manipulation and form validation.
+-->
+</head>
+<body>
+<h2>Student Grading System</h2>
+<form onsubmit="calculateGrade(event)">
+Student Name: <input type="text" id="name" required><br><br>
+<div id="subjects">
+<div>Subject 1: <input type="text" placeholder="Subject Name" required>
+Marks: <input type="number" class="marks" min="0" max="100" required></div>
+</div><br>
+<button type="button" onclick="addSubject()">Add Subject</button>
+<button type="submit">Calculate Grade</button>
+</form>
+<h3 id="result"></h3>
+<script>
+let count = 1;
+function addSubject() {
+    count++;
+    let div = document.createElement("div");
+    div.innerHTML = `Subject ${count}: <input type="text" placeholder="Subject Name" required> Marks: <input type="number" class="marks" min="0" max="100" required><br><br>`;
+    document.getElementById("subjects").appendChild(div);
+}
+function calculateGrade(event) {
+    event.preventDefault();
+    let name = document.getElementById("name").value.trim();
+    let marks = document.querySelectorAll(".marks");
+    let subjects = document.querySelectorAll("#subjects input[type=text]");
+    let total = 0;
+    for (let i = 0; i < marks.length; i++) {
+        if (!subjects[i].value.trim() || marks[i].value === "" || Number(marks[i].value) < 0 || Number(marks[i].value) > 100) {
+            alert("Enter valid subject names and marks between 0 and 100.");
+            return;
+        }
+        total += Number(marks[i].value);
+    }
+    let percentage = total / marks.length;
+    let grade = percentage >= 90 ? "A+" : percentage >= 80 ? "A" : percentage >= 70 ? "B" : percentage >= 60 ? "C" : percentage >= 40 ? "D" : "Fail";
+    document.getElementById("result").innerHTML = `${name}<br>Total: ${total}/${marks.length * 100}<br>Percentage: ${percentage.toFixed(2)}%<br>Grade: ${grade}`;
+}
+</script>
+</body>
+</html>
