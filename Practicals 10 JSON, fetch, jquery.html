@@ -10,43 +10,42 @@ To load and display JSON data using Fetch API and jQuery
 $.getJSON(), and dynamically render results in a table.
 
 THEORY:
-JSON stands for JavaScript Object Notation. It is a lightweight
-format used to store and exchange data.
+JSON stands for JavaScript Object Notation. It is used
+to store and exchange data between applications.
 
 DIFFERENCE BETWEEN FETCH AND jQuery getJSON():
-1. Fetch is a built-in JavaScript API, whereas getJSON()
+1. Fetch is a built-in JavaScript API, while getJSON()
    is a method provided by the jQuery library.
 2. Fetch does not require an external library.
    getJSON() requires jQuery.
 3. Fetch uses response.json() to parse JSON data.
    getJSON() automatically parses JSON responses.
 4. Fetch handles errors using catch().
-   jQuery getJSON() handles errors using fail().
-5. Fetch supports different HTTP request methods.
-   getJSON() is specifically used for GET requests.
+   jQuery handles errors using fail().
+5. Fetch supports different HTTP methods, while getJSON()
+   is specifically used for GET requests.
 
 CODE EXPLANATION:
-1. Student details are stored as JSON data in JavaScript.
-2. Fetch API loads the data using a Blob URL.
-3. jQuery getJSON() loads the same data using a data URL.
-4. JSON.parse() converts JSON text into JavaScript objects.
+1. Student data is stored in the external students.json file.
+2. Fetch API loads the JSON file using fetch().
+3. jQuery $.getJSON() loads the same file.
+4. response.json() converts the response into objects.
 5. createElement() creates table rows and cells.
 6. appendChild() adds rows dynamically to the table.
 
-FUNCTIONS AND METHODS USED:
-fetch() : Retrieves data asynchronously.
+FUNCTIONS USED:
+fetch() : Retrieves data from a server.
 then() : Handles successful results.
 json() : Converts response into JSON.
 catch() : Handles errors.
-$.getJSON() : Retrieves JSON data using jQuery.
-JSON.parse() : Converts JSON text into objects.
+$.getJSON() : Loads JSON data using jQuery.
 createElement() : Creates HTML elements.
 appendChild() : Adds elements to the DOM.
 forEach() : Iterates through an array.
 
 CONCLUSION:
-Successfully loaded JSON data using Fetch API and jQuery
-getJSON() and displayed the results dynamically in a table.
+Successfully loaded external JSON data using Fetch API
+and jQuery getJSON() and displayed it in a table.
 -->
 </head>
 <body>
@@ -57,13 +56,6 @@ getJSON() and displayed the results dynamically in a table.
 <button onclick="loadJQuery()">Load Using jQuery</button>
 <table border="1" id="jqueryTable"></table>
 <script>
-let students = [
-    {name:"Omkar", age:20},
-    {name:"Nandini", age:20},
-    {name:"Anushka", age:19},
-    {name:"Arnav", age:19}
-];
-let jsonData = JSON.stringify(students);
 function display(data, id) {
     let table = document.getElementById(id);
     table.innerHTML = "<tr><th>Name</th><th>Age</th></tr>";
@@ -78,18 +70,19 @@ function display(data, id) {
     });
 }
 function loadFetch() {
-    let blob = new Blob([jsonData], {type:"application/json"});
-    fetch(URL.createObjectURL(blob))
-    .then(response => response.json())
+    fetch("students.json")
+    .then(response => {
+        if (!response.ok) throw new Error("File not found");
+        return response.json();
+    })
     .then(data => display(data, "fetchTable"))
     .catch(error => alert("Fetch Error: " + error));
 }
 function loadJQuery() {
-    let dataURL = "data:application/json;charset=utf-8," + encodeURIComponent(jsonData);
-    $.getJSON(dataURL, function(data) {
+    $.getJSON("students.json", function(data) {
         display(data, "jqueryTable");
     }).fail(function() {
-        alert("Error loading JSON!");
+        alert("Error loading students.json!");
     });
 }
 </script>
